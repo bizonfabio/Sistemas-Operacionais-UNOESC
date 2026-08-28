@@ -17,13 +17,59 @@ typedef struct {
 
 void mostrar_memoria(int memoria[]){
     int cont;
+    
     for(cont = 0; cont < TAM_MEM; cont++ ){
         printf("[%d]",memoria[cont]);
-
-    }        
-    
+    }       
+    //printf("Contrario \n");
+    /*for(cont = TAM_MEM -1; cont >= 0; cont--){
+        printf("[%d]",memoria[cont]);
+    }*/
 
 }
+
+int conta_zero(int memoria[]){
+
+    int qtd = 0;
+
+    for(int i = 0; i <TAM_MEM; i++){
+        if(memoria[i] == 0){
+            qtd++;
+        }
+    }
+    printf("\nQuantidade de zeros livres: %d\n", qtd);
+    
+}
+
+int blocos_livres(int memoria[]){
+
+    int qtd_blocos = 0;
+    int blocos_cheios = 0;
+    int em_bloco_livre = 0;
+    int em_bloco_cheio = 0;
+    
+
+    for(int i = 0; i <TAM_MEM; i++){
+        if(memoria[i] == 0){ //se memoria livre contar ir ate o lugar ocupado
+            em_bloco_cheio = 0; // saiu bloco cheio
+            if(em_bloco_livre == 0){
+                em_bloco_livre = 1;
+                qtd_blocos++;        
+            }            
+        }   
+            else{
+                em_bloco_livre = 0; // esta em bloco cheio
+                if(em_bloco_cheio == 0){                   
+                em_bloco_cheio = 1;
+                blocos_cheios++;
+                }
+        }
+    }
+    printf("\nQuantidade de blocos livres: %d\n", qtd_blocos);
+    printf("\nQuantidade de blocos cheios: %d\n", blocos_cheios);
+    
+}
+
 
 int first_fit(int memoria[], Proc procs){
 
@@ -103,8 +149,8 @@ int main()
 
     int memoria[TAM_MEM] = {
         1, 1, 1, 1, 
-        2, 2, 0, 0,
-        2, 0, 0, 0,
+        0, 0, 2, 2,
+        0, 0, 0, 0,
         3, 3, 3, 0,
         0, 0, 0, 0
     };
@@ -123,7 +169,7 @@ int main()
     //Estado inicial da memoria
     printf("Estado inicial Memoria\n");
     mostrar_memoria(memoria);
-
+    blocos_livres(memoria);
     
     best_fit(memoria, procs[0]);
     
@@ -132,7 +178,7 @@ int main()
     }
     */
     printf("\nMemoria apos alocacao\n");
-    mostrar_memoria(memoria);
+    //mostrar_memoria(memoria);
     
     
     
