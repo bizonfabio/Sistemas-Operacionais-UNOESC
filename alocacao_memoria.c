@@ -80,7 +80,7 @@ int first_fit(int memoria[], Proc procs){
     Funcao que aloca os processos na memória. Essa função usa o método first fit, que aloca o processo no primeiro bloco de memória disponível.
     */
     int cont;
-    printf("Entrou na funcao\n");
+    printf("Entrou na funcao First Fit \n");
     for(cont = 0; cont < TAM_MEM; cont++){  //percorre toda a memória 
     //printf("%d\n", memoria[cont]);     
 
