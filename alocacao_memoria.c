@@ -10,7 +10,7 @@ typedef struct {
     int id;
     int tam;
 
-} Proc;
+} Proc; //estrutura para simular um processo na memória;
 
 
 //Funcoes
@@ -28,7 +28,7 @@ void mostrar_memoria(int memoria[]){
 
 }
 
-int conta_zero(int memoria[]){
+int conta_zero(int memoria[]){ // função para contar espaços mínimos vazios na memória;
 
     int qtd = 0;
 
@@ -41,7 +41,10 @@ int conta_zero(int memoria[]){
     
 }
 
-int blocos_livres(int memoria[]){
+int blocos_livres(int memoria[]){ 
+    /*funcao mostra a quantidade e blocos vazios e ocupados na memória, importante para checar se existe memória disponível antes de alocar
+    importante lembrar que fazer essa checagem também ocupa memória.
+    */
 
     int qtd_blocos = 0;
     int blocos_cheios = 0;
@@ -73,25 +76,30 @@ int blocos_livres(int memoria[]){
 
 int first_fit(int memoria[], Proc procs){
 
+    /*
+    Funcao que aloca os processos na memória. Essa função usa o método first fit, que aloca o processo no primeiro bloco de memória disponível.
+    */
     int cont;
     printf("Entrou na funcao\n");
-    for(cont = 0; cont < TAM_MEM; cont++){   
-    printf("%d\n", memoria[cont]);     
+    for(cont = 0; cont < TAM_MEM; cont++){  //percorre toda a memória 
+    //printf("%d\n", memoria[cont]);     
 
-        if (memoria[cont] == 0)
+        if (memoria[cont] == 0) //se o valor da memória no índice atual for == 0 então deve ser medido o tamanho do bloco livre.
         {
             printf("Bloco eh zero\n");
-            int tam_bloco = 0;
-            int inicio = cont;
+            int tam_bloco = 0; //bloco livre inicia com tamanho 0;
+            int inicio = cont; //o início do bloco é a posicao que o contador encontrou o primeiro zero.
 
-            while(cont <= TAM_MEM && memoria[cont] == 0){
-                printf("memoria e valida e igual a zero\n");
-                tam_bloco++;
+            while(cont <= TAM_MEM && memoria[cont] == 0){ //enquanto o contador for menor que o tamanho da memória e o valor da memória for zero
+                
+                tam_bloco++; //o bloco livre aumenta da tamanho.
                 cont++;
 
-                if(tam_bloco >= procs.tam){
+                if(tam_bloco >= procs.tam){ //se o tamanho do bloco livre é maior ou igual ao tamanho do processo, então o processo deve ser alocado nesse lugar.
                     printf("Encontrou bloco\n");
-                    for(int i = inicio; i < inicio + tam_bloco; i++){
+                    printf("Inicio  %d\n", inicio);
+                    printf("Tamanho bloco %d\n", tam_bloco);
+                    for(int i = inicio; i < inicio + tam_bloco; i++){ //outro contador inicia na posição inicial//8 do bloco e vai até o final do bloco//11, que é início + tamanho (8 + 3 = 11)
                         memoria[i] = procs.id;
                     }
                     printf("Bloco Alocado\n");
